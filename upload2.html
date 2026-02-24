@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Upload Post Example</title>
+  <style>
+    button { padding: 8px 16px; margin: 5px; }
+    img, video, audio { display: block; margin-top: 10px; max-width: 300px; }
+  </style>
+</head>
+<body>
+  <!-- Hidden file input -->
+  <input type="file" id="fileInput" accept="image/*,video/*,audio/*" style="display:none"  />
+
+  <!-- Buttons -->
+  <button id="chooseBtn">Choose File</button>
+  <button id="postBtn">Post</button>
+
+  <!-- Preview container -->
+  <div id="preview"></div>
+
+  <script>
+    const fileInput = document.getElementById("fileInput");
+    const chooseBtn = document.getElementById("chooseBtn");
+    const postBtn = document.getElementById("postBtn");
+    const preview = document.getElementById("preview");
+
+    let selectedFile = null;
+
+    // Open file picker
+    chooseBtn.addEventListener("click", () => {
+      fileInput.click();
+    });
+
+    // Store selected file (no preview yet)
+    fileInput.addEventListener("change", (e) => {
+      selectedFile = e.target.files[0];
+    });
+
+    // Post button shows the preview
+    postBtn.addEventListener("click", () => {
+      if (!selectedFile) {
+        alert("Please choose a file first!");
+        return;
+      }
+
+      // Clear previous preview
+      preview.innerHTML = "";
+
+      const url = URL.createObjectURL(selectedFile);
+
+      if (selectedFile.type.startsWith("image")) {
+        const img = document.createElement("img");
+        img.src = url;
+        preview.appendChild(img);
+      } else if (selectedFile.type.startsWith("video")) {
+        const video = document.createElement("video");
+        video.src = url;
+        video.controls = true;
+        preview.appendChild(video);
+      } else if (selectedFile.type.startsWith("audio")) {
+        const audio = document.createElement("audio");
+        audio.src = url;
+        audio.controls = true;
+        preview.appendChild(audio);
+      }
+
+      // Optional: clear selected file so user can choose a new one
+      selectedFile = null;
+      fileInput.value = "";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Upload Post Example</title></head>
+<body>
+    
+<div className="hero">
+  <img src="images/profile.png" alt="" id="image"><br>
+  <label for="input-file">Update image</label><br>
+  <input style="display: none;" type="file" id="input-file" accept="imageljpeg, image/png, image/jpg"><br>
+</div>
+    <script>
+ let profile = document.getElementById("image")
+ let inputfile = document.getElementById("input-file")
+ inputfile.onchange = function(){
+  profile.src = URL.createObjectURL(inputfile.files[0])
+ }
+    </script>
+</body>
+</html>
